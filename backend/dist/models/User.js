@@ -2,34 +2,33 @@ import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 const UserSchema = new Schema({
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
     role: {
         type: String,
-        enum: ['super_admin', 'admin', 'teacher', 'student', 'parent', 'support'],
-        default: 'student',
+        enum: ['super_admin', 'admin', 'teacher', 'student', 'parent'],
+        default: 'student'
     },
-    avatar: { type: String },
-    phoneNumber: { type: String },
     instituteId: { type: Schema.Types.ObjectId, ref: 'Institute' },
-    isActive: { type: Boolean, default: true },
+    phoneNumber: { type: String },
+    avatar: { type: String },
     isVerified: { type: Boolean, default: false },
+    // Parent-Student Relationships
+    children: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    parent: { type: Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 // Hash password before saving
 UserSchema.pre('save', async function () {
-    if (!this.isModified('password'))
+    if (!this.isModified('password')) {
         return;
-    try {
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
     }
-    catch (err) {
-        throw err;
-    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
 });
 // Compare password method
-UserSchema.methods.comparePassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
+UserSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
 };
-export default mongoose.model('User', UserSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
+export default User;
 //# sourceMappingURL=User.js.map
