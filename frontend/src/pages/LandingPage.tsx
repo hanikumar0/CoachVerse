@@ -1,4 +1,4 @@
-import { motion, useScroll } from 'framer-motion';
+import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import {
     BookOpen,
     Star,
@@ -12,19 +12,41 @@ import {
     Check,
     Quote,
     Layers,
-    ArrowUpRight
+    ArrowUpRight,
+    Menu,
+    X,
+    Twitter,
+    Github,
+    Linkedin,
+    Youtube
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 const LandingPage = () => {
     const sectionRef = useRef(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start end", "end start"]
     });
-    console.log(scrollYProgress); // Keep it or use it for something simple to resolve lint if needed, or just remove.
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const navLinks = [
+        { name: 'Features', href: '#features' },
+        { name: 'Integrations', href: '#integrations' },
+        { name: 'Pricing', href: '#pricing' },
+        { name: 'Resources', href: '#resources' }
+    ];
 
     return (
         <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-700 overflow-x-hidden">
@@ -35,8 +57,8 @@ const LandingPage = () => {
             </div>
 
             {/* Navigation */}
-            <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-xl z-[100] border-b border-slate-100/50 transition-all duration-300">
-                <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <nav className={`fixed top-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl border-b border-slate-100 py-4' : 'bg-transparent py-6'}`}>
+                <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <motion.div
                             whileHover={{ rotate: 10, scale: 1.1 }}
@@ -50,38 +72,90 @@ const LandingPage = () => {
                         </span>
                     </div>
 
+                    {/* Desktop Menu */}
                     <div className="hidden lg:flex items-center gap-8">
-                        {['Features', 'Integrations', 'Pricing', 'Resources'].map((item) => (
+                        {navLinks.map((item) => (
                             <a
-                                key={item}
-                                href={`#${item.toLowerCase()}`}
+                                key={item.name}
+                                href={item.href}
                                 className="text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors tracking-tight"
                             >
-                                {item}
+                                {item.name}
                             </a>
                         ))}
                     </div>
 
-                    <div className="flex items-center gap-6">
-                        <Link to="/login" className="hidden sm:block text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">
-                            Log In
-                        </Link>
-                        <Link
-                            to="/register"
-                            className="group relative bg-slate-900 text-white px-8 py-3.5 rounded-2xl text-sm font-black overflow-hidden shadow-2xl shadow-slate-200 transition-all hover:scale-105 active:scale-95"
+                    <div className="flex items-center gap-4">
+                        <div className="hidden sm:flex items-center gap-6">
+                            <Link to="/login" className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">
+                                Log In
+                            </Link>
+                            <Link
+                                to="/register"
+                                className="group relative bg-slate-900 text-white px-8 py-3.5 rounded-2xl text-sm font-black overflow-hidden shadow-2xl shadow-slate-200 transition-all hover:scale-105 active:scale-95"
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    START FREE
+                                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                </span>
+                                <div className="absolute inset-0 bg-indigo-600 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300"></div>
+                            </Link>
+                        </div>
+
+                        {/* Mobile Menu Toggle */}
+                        <button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-all"
                         >
-                            <span className="relative z-10 flex items-center gap-2">
-                                START FREE
-                                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                            </span>
-                            <div className="absolute inset-0 bg-indigo-600 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300"></div>
-                        </Link>
+                            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        </button>
                     </div>
                 </div>
+
+                {/* Mobile Menu Content */}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="lg:hidden bg-white border-b border-slate-100 overflow-hidden"
+                        >
+                            <div className="px-6 py-8 space-y-6">
+                                {navLinks.map((item) => (
+                                    <a
+                                        key={item.name}
+                                        href={item.href}
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="block text-lg font-bold text-slate-600 hover:text-indigo-600 transition-all tracking-tight"
+                                    >
+                                        {item.name}
+                                    </a>
+                                ))}
+                                <div className="pt-6 border-t border-slate-50 space-y-4">
+                                    <Link
+                                        to="/login"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="block w-full text-center py-4 bg-slate-100 rounded-2xl font-black text-slate-600"
+                                    >
+                                        LOG IN
+                                    </Link>
+                                    <Link
+                                        to="/register"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="block w-full text-center py-4 bg-indigo-600 text-white rounded-2xl font-black shadow-lg shadow-indigo-100"
+                                    >
+                                        START FREE
+                                    </Link>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
 
             {/* Hero Section */}
-            <section className="relative pt-56 pb-20 px-6 overflow-visible">
+            <section className="relative pt-40 md:pt-56 pb-20 px-6 overflow-visible">
                 <div className="max-w-7xl mx-auto text-center relative">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -94,7 +168,7 @@ const LandingPage = () => {
                             PLATFORM VERSION 2.0 IS LIVE
                         </span>
 
-                        <h1 className="text-7xl md:text-[8rem] font-black text-slate-900 tracking-tight leading-[0.85] mb-10">
+                        <h1 className="text-5xl md:text-[8rem] font-black text-slate-900 tracking-tight leading-[1] md:leading-[0.85] mb-10">
                             Empower your <br />
                             <span className="relative inline-block text-indigo-600">
                                 Academy
@@ -104,17 +178,17 @@ const LandingPage = () => {
                             </span>
                         </h1>
 
-                        <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto mb-16 leading-relaxed font-medium">
+                        <p className="text-lg md:text-2xl text-slate-500 max-w-2xl mx-auto mb-16 leading-relaxed font-medium px-4">
                             Scale your coaching business with intelligence. Manage students,
                             courses, and growth in one stunning, AI-powered hub.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 px-4">
                             <Link to="/register" className="w-full sm:w-auto bg-indigo-600 text-white px-12 py-5 rounded-[2.5rem] font-black text-lg flex items-center justify-center gap-3 hover:bg-indigo-700 transition-all shadow-[0_20px_40px_-15px_rgba(79,70,229,0.3)] active:scale-95 group">
                                 Create Workspace
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
-                            <button className="w-full sm:w-auto bg-white text-slate-900 border-2 border-slate-100 px-12 py-5 rounded-[2.5rem] font-black text-lg hover:border-indigo-100 hover:bg-slate-50 transition-all flex items-center justify-center gap-3">
+                            <button className="w-full sm:w-auto bg-white text-slate-900 border-2 border-slate-100 px-12 py-5 rounded-[2.5rem] font-black text-lg hover:border-indigo-100 hover:bg-slate-50 transition-all flex items-center justify-center gap-3 shadow-sm">
                                 <PlayCircle className="w-5 h-5 text-indigo-600" />
                                 Product Tour
                             </button>
@@ -125,14 +199,14 @@ const LandingPage = () => {
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-20 relative max-w-[1100px] mx-auto pointer-events-none"
+                        className="mt-20 relative max-w-[1100px] mx-auto pointer-events-none px-4"
                     >
                         {/* Dashboard Image */}
-                        <div className="relative rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] border-8 border-white bg-slate-900">
+                        <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] border-4 md:border-8 border-white bg-slate-900">
                             <img
                                 src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200"
                                 alt="CoachVerse Dashboard"
-                                className="w-full object-cover opacity-90 transition-opacity duration-1000 group-hover:opacity-100"
+                                className="w-full h-auto object-cover opacity-90 transition-opacity duration-1000 group-hover:opacity-100"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
                         </div>
@@ -153,29 +227,6 @@ const LandingPage = () => {
                                 </div>
                             </div>
                         </motion.div>
-
-                        <motion.div
-                            animate={{ y: [0, 20, 0] }}
-                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                            className="absolute -bottom-8 -left-8 p-8 bg-black text-white rounded-[2.5rem] shadow-2xl border border-slate-800 hidden lg:block"
-                        >
-                            <div className="flex items-center gap-4">
-                                <div className="flex -space-x-4">
-                                    {[1, 2, 3].map(i => (
-                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-slate-800 flex items-center justify-center text-[10px]">
-                                            U{i}
-                                        </div>
-                                    ))}
-                                </div>
-                                <div>
-                                    <p className="text-xs font-black tracking-widest uppercase">Live Mentors</p>
-                                    <div className="flex items-center gap-1.5 text-emerald-400">
-                                        <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                                        <span className="text-[10px] font-bold">1.2k Online</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
                     </motion.div>
                 </div>
             </section>
@@ -184,7 +235,7 @@ const LandingPage = () => {
             <div className="py-24 bg-white/50 backdrop-blur-sm relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <p className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] mb-12">Industry leading institutes trust CoachVerse</p>
-                    <div className="flex flex-wrap justify-between items-center gap-x-16 gap-y-12 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
+                    <div className="flex flex-wrap justify-center lg:justify-between items-center gap-x-16 gap-y-12 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
                         {['TECHNIQUE', 'LEARN.AI', 'MODERN.ED', 'SYNERGY', 'VELOCITY'].map(brand => (
                             <span key={brand} className="text-3xl font-black tracking-tighter text-slate-900">{brand}</span>
                         ))}
@@ -198,11 +249,11 @@ const LandingPage = () => {
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-32">
                         <div className="max-w-3xl">
                             <span className="text-indigo-600 font-extrabold uppercase tracking-[0.3em] text-xs mb-8 block">PLATFORM ECOSYSTEM</span>
-                            <h2 className="text-5xl md:text-8xl font-black text-slate-900 tracking-tight leading-[0.85] mb-12">
+                            <h2 className="text-5xl md:text-8xl font-black text-slate-900 tracking-tight leading-[1] md:leading-[0.85] mb-12">
                                 Engineered for <br />
                                 <span className="text-slate-300">Infinite Scaling.</span>
                             </h2>
-                            <p className="text-xl text-slate-500 font-medium">A unified operating system for your entire educational enterprise.</p>
+                            <p className="text-xl text-slate-500 font-medium leading-relaxed">A unified operating system for your entire educational enterprise.</p>
                         </div>
                     </div>
 
@@ -211,9 +262,9 @@ const LandingPage = () => {
                             { title: 'Unified Dashboards', desc: 'Custom portals tailored for students, parents, teachers, and admins.', icon: Layout, theme: 'indigo' },
                             { title: 'Predictive Analytics', desc: 'Identify struggling students before they fail with AI signals.', icon: BarChart, theme: 'rose' },
                             { title: 'Smart Scheduling', desc: 'Automated batch management and conflict-free timetables.', icon: Smartphone, theme: 'emerald' },
-                            { title: 'End-to-End Encryption', desc: 'Military-grade security for student data and communications.', icon: Shield, theme: 'amber' },
-                            { title: 'Global Infrastructure', desc: 'Ultra-low latency content delivery for students worldwide.', icon: Globe, theme: 'blue' },
-                            { title: 'Brand Identity', desc: 'Fully white-labeled portal that looks like your own app.', icon: Smartphone, theme: 'violet' },
+                            { title: 'Data Security', desc: 'Military-grade encryption for student records and transactions.', icon: Shield, theme: 'amber' },
+                            { title: 'Global Reach', desc: 'Ultra-low latency content delivery for students worldwide.', icon: Globe, theme: 'blue' },
+                            { title: 'Brand Identity', desc: 'Fully white-labeled portal that reflects your unique brand.', icon: Smartphone, theme: 'violet' },
                         ].map((f, i) => (
                             <motion.div
                                 key={i}
@@ -221,7 +272,7 @@ const LandingPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="group p-12 rounded-[3.5rem] bg-white border border-slate-100 hover:border-indigo-100 hover:shadow-[0_40px_80px_-20px_rgba(79,70,229,0.1)] transition-all duration-500 relative overflow-hidden"
+                                className="group p-10 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] bg-white border border-slate-100 hover:border-indigo-100 hover:shadow-[0_40px_80px_-20px_rgba(79,70,229,0.1)] transition-all duration-500 relative overflow-hidden"
                             >
                                 <div className={`w-14 h-14 rounded-3xl mb-10 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-slate-50`}>
                                     <f.icon className="w-7 h-7 text-slate-800" />
@@ -240,7 +291,7 @@ const LandingPage = () => {
             {/* Testimonials */}
             <section className="py-40 bg-slate-50 relative overflow-hidden px-6">
                 <div className="max-w-7xl mx-auto text-center mb-24">
-                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter mb-8">Loved by modern creators.</h2>
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter mb-8 px-4">Loved by modern creators.</h2>
                     <div className="flex justify-center gap-2">
                         {[1, 2, 3, 4, 5].map(i => (
                             <Star key={i} className="w-6 h-6 fill-indigo-600 text-indigo-600" />
@@ -250,13 +301,13 @@ const LandingPage = () => {
 
                 <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     {[
-                        { name: 'Alex Harrington', role: 'Founder, TechAcademy', text: "The most robust LMS we've ever used. The student dashboard is worlds ahead of Moodle or Canvas in terms of UX." },
-                        { name: 'Dr. Sarah Chen', role: 'Dean, Creative Arts Inst.', text: "CoachVerse reduced our admin overhead by 60%. The automated batch tracking is a lifesaver for our staff." },
-                        { name: 'Marcus Russo', role: 'Head Coach, FitCode', text: "Stunning interface. My students actually enjoy logging in to track their progress. Highly recommended for scaling." }
+                        { name: 'Alex Harrington', role: 'Founder, TechAcademy', text: "The most robust LMS we've ever used. The student dashboard is worlds ahead in terms of UX." },
+                        { name: 'Dr. Sarah Chen', role: 'Dean, Creative Arts Inst.', text: "CoachVerse reduced our admin overhead by 60%. Automated tracking is a lifesaver." },
+                        { name: 'Marcus Russo', role: 'Head Coach, FitCode', text: "Stunning interface. My students enjoy logging in to track progress. Highly recommended." }
                     ].map((t, i) => (
-                        <div key={i} className="p-12 bg-white rounded-[3rem] border border-slate-200/50 shadow-sm relative group">
+                        <div key={i} className="p-10 md:p-12 bg-white rounded-[3rem] border border-slate-200/50 shadow-sm relative group">
                             <Quote className="absolute top-8 right-8 w-12 h-12 text-slate-50 group-hover:text-indigo-50 transition-colors" />
-                            <p className="text-lg font-medium text-slate-700 leading-relaxed mb-10 italic">"{t.text}"</p>
+                            <p className="text-lg font-medium text-slate-700 leading-relaxed mb-10 italic px-2">"{t.text}"</p>
                             <div>
                                 <h4 className="font-black text-slate-900 uppercase text-sm tracking-widest">{t.name}</h4>
                                 <p className="text-xs font-bold text-slate-400 mt-1 uppercase tracking-widest">{t.role}</p>
@@ -268,9 +319,9 @@ const LandingPage = () => {
 
             {/* Pricing Section */}
             <section id="pricing" className="py-40 px-6">
-                <div className="max-w-7xl mx-auto text-center mb-20">
+                <div className="max-w-7xl mx-auto text-center mb-20 px-4">
                     <span className="text-xs font-black text-indigo-600 tracking-[0.4em] uppercase block mb-4">Pricing Plans</span>
-                    <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter">Simple, transparent pricing.</h2>
+                    <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-tight">Simple, transparent pricing.</h2>
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -279,7 +330,7 @@ const LandingPage = () => {
                         { name: 'Professional', price: '$49', features: ['Up to 100 Students', 'AI Performance Alerts', 'Priority Support', '50GB Storage'], highlight: true },
                         { name: 'Enterprise', price: '$199', features: ['Unlimited Students', 'Full White Labeling', 'Dedicated Account Manager', 'Unlimited Storage'] },
                     ].map((plan, i) => (
-                        <div key={i} className={`p-12 rounded-[3.5rem] border ${plan.highlight ? 'bg-slate-950 text-white border-slate-900 shadow-3xl shadow-indigo-100 scale-105' : 'bg-white text-slate-900 border-slate-100'} transition-all hover:scale-[1.07] duration-500`}>
+                        <div key={i} className={`p-10 md:p-12 rounded-[3.5rem] border ${plan.highlight ? 'bg-slate-950 text-white border-slate-900 shadow-3xl shadow-indigo-100 scale-100 lg:scale-105' : 'bg-white text-slate-900 border-slate-100'} transition-all hover:scale-[1.02] duration-500`}>
                             <h3 className="text-xl font-black uppercase tracking-widest mb-4">{plan.name}</h3>
                             <div className="flex items-baseline gap-2 mb-10">
                                 <span className="text-6xl font-black tracking-tighter">{plan.price}</span>
@@ -305,7 +356,7 @@ const LandingPage = () => {
 
             {/* CTA Final */}
             <section className="pb-32 px-6">
-                <div className="max-w-7xl mx-auto rounded-[4rem] bg-indigo-600 p-12 md:p-32 text-center text-white relative overflow-hidden shadow-3xl shadow-indigo-200">
+                <div className="max-w-7xl mx-auto rounded-[3rem] md:rounded-[4rem] bg-indigo-600 p-10 md:p-32 text-center text-white relative overflow-hidden shadow-3xl shadow-indigo-200">
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-700 to-indigo-900"></div>
                     <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 
@@ -318,9 +369,6 @@ const LandingPage = () => {
                             <Link to="/register" className="w-full sm:w-auto bg-white text-indigo-700 px-12 py-5 rounded-3xl font-black text-lg hover:scale-105 transition-all shadow-xl shadow-indigo-900/20 active:scale-95">
                                 Try Free For 14 Days
                             </Link>
-                            <Link to="/login" className="w-full sm:w-auto bg-indigo-500 text-white border border-indigo-400 px-12 py-5 rounded-3xl font-black text-lg hover:bg-indigo-400 transition-all active:scale-95">
-                                Browse Portals
-                            </Link>
                         </div>
                         <p className="mt-10 text-indigo-100 font-bold opacity-60 text-xs tracking-[0.3em] uppercase">No credit card required. Cancel anytime.</p>
                     </div>
@@ -330,31 +378,77 @@ const LandingPage = () => {
             {/* Footer */}
             <footer className="py-24 bg-white border-t border-slate-100">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid lg:grid-cols-6 gap-20 mb-20">
-                        <div className="col-span-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-16 lg:gap-20 mb-20">
+                        <div className="md:col-span-2">
                             <div className="flex items-center gap-3 mb-8">
                                 <div className="bg-indigo-600 p-2 rounded-xl">
                                     <BookOpen className="text-white w-5 h-5" />
                                 </div>
                                 <span className="text-2xl font-black tracking-tighter">CoachVerse</span>
                             </div>
-                            <p className="text-slate-400 font-medium leading-relaxed max-w-xs uppercase text-[10px] tracking-widest">
+                            <p className="text-slate-400 font-medium leading-relaxed max-w-xs uppercase text-[10px] tracking-widest mb-8">
                                 The world's most advanced hub for digital academics and elite private coaches.
                             </p>
+                            <div className="flex items-center gap-4">
+                                <a href="https://twitter.com/coachverse" target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-sky-500 hover:bg-sky-50 transition-all">
+                                    <Twitter className="w-5 h-5" />
+                                </a>
+                                <a href="https://github.com/coachverse" target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all">
+                                    <Github className="w-5 h-5" />
+                                </a>
+                                <a href="https://linkedin.com/company/coachverse" target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all">
+                                    <Linkedin className="w-5 h-5" />
+                                </a>
+                                <a href="https://youtube.com/c/coachverse" target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all">
+                                    <Youtube className="w-5 h-5" />
+                                </a>
+                            </div>
                         </div>
 
                         {[
-                            { title: 'Product', links: ['Features', 'LMS', 'Dashboard', 'Security'] },
-                            { title: 'Company', links: ['About', 'Careers', 'Contact', 'Blog'] },
-                            { title: 'Support', links: ['Documentation', 'API', 'System Status', 'Help Center'] },
-                            { title: 'Legal', links: ['Privacy', 'Terms', 'OAuth', 'Cookies'] }
+                            {
+                                title: 'Product', links: [
+                                    { name: 'Features', path: '#features' },
+                                    { name: 'LMS', path: '/register' },
+                                    { name: 'Mobile App', path: '/' },
+                                    { name: 'Security', path: '/' }
+                                ]
+                            },
+                            {
+                                title: 'Company', links: [
+                                    { name: 'About', path: '/' },
+                                    { name: 'Careers', path: '/' },
+                                    { name: 'Contact', path: '/' },
+                                    { name: 'Blog', path: '/' }
+                                ]
+                            },
+                            {
+                                title: 'Support', links: [
+                                    { name: 'Documentation', path: '/' },
+                                    { name: 'API Reference', path: '/' },
+                                    { name: 'Help Center', path: '/' },
+                                    { name: 'Terms of Service', path: '/' }
+                                ]
+                            },
+                            {
+                                title: 'Legal', links: [
+                                    { name: 'Privacy Policy', path: '/' },
+                                    { name: 'Cookie Policy', path: '/' },
+                                    { name: 'GDPR Compliance', path: '/' },
+                                    { name: 'SLA', path: '/' }
+                                ]
+                            }
                         ].map(col => (
                             <div key={col.title}>
                                 <h4 className="font-black uppercase text-[10px] tracking-[0.3em] text-slate-900 mb-8">{col.title}</h4>
                                 <ul className="space-y-4">
                                     {col.links.map(link => (
-                                        <li key={link}>
-                                            <a href="#" className="text-sm font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-tight">{link}</a>
+                                        <li key={link.name}>
+                                            {link.path.startsWith('#') ? (
+                                                <a href={link.path} className="text-sm font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-tight">{link.name}</a>
+                                            ) : (
+                                                <Link to={link.path} className="text-sm font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-tight">{link.name}</Link>
+                                            )}
                                         </li>
                                     ))}
                                 </ul>
@@ -364,12 +458,10 @@ const LandingPage = () => {
 
                     <div className="pt-10 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-8">
                         <div className="flex items-center gap-8">
-                            <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none">© 2026 COACHVERSE LTD.</p>
+                            <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none">© 2026 COACHVERSE LTD. ALL RIGHTS RESERVED.</p>
                         </div>
-                        <div className="flex gap-6 grayscale opacity-30">
-                            {[1, 2, 3, 4].map(i => (
-                                <div key={i} className="w-6 h-6 bg-slate-400 rounded-lg"></div>
-                            ))}
+                        <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            <span>BUILT WITH ❤️ FOR THE FUTURE OF EDUCATION</span>
                         </div>
                     </div>
                 </div>

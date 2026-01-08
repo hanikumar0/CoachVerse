@@ -18,11 +18,13 @@ const seed = async () => {
         await Batch.deleteMany({});
         await Institute.deleteMany({});
 
+        const seedPassword = process.env.INITIAL_SEED_PASSWORD || 'CoachVerse@2026';
+
         // 1. Create Super Admin
         const superAdmin = await User.create({
             name: 'Global Admin',
             email: 'admin@coachverse.com',
-            password: 'password123',
+            password: seedPassword,
             role: 'super_admin',
             isVerified: true
         });
@@ -46,7 +48,7 @@ const seed = async () => {
         const teacher1 = await User.create({
             name: 'Dr. Sarah Wilson',
             email: 'sarah@elite.com',
-            password: 'password123',
+            password: seedPassword,
             role: 'teacher',
             instituteId: inst1._id,
             isVerified: true
@@ -55,7 +57,7 @@ const seed = async () => {
         const teacher2 = await User.create({
             name: 'Prof. Michael Ross',
             email: 'michael@academy.com',
-            password: 'password123',
+            password: seedPassword,
             role: 'teacher',
             instituteId: inst1._id,
             isVerified: true
@@ -65,7 +67,7 @@ const seed = async () => {
         const student1 = await User.create({
             name: 'John Doe',
             email: 'student@coachverse.com',
-            password: 'password123',
+            password: seedPassword,
             role: 'student',
             instituteId: inst1._id,
             isVerified: true
@@ -74,22 +76,26 @@ const seed = async () => {
         const student2 = await User.create({
             name: 'Jane Smith',
             email: 'jane@coachverse.com',
-            password: 'password123',
+            password: seedPassword,
             role: 'student',
             instituteId: inst1._id,
             isVerified: true
         });
 
         // 5. Create Parents
-        await User.create({
+        const parent = await User.create({
             name: 'Mr. Robert Doe',
             email: 'parent@coachverse.com',
-            password: 'password123',
+            password: seedPassword,
             role: 'parent',
             instituteId: inst1._id,
-            phoneNumber: student1._id.toString(), // Store child ID in phoneNumber for demo link
+            phoneNumber: '9988776655',
+            children: [student1._id],
             isVerified: true
         });
+
+        // Link student back to parent
+        await User.findByIdAndUpdate(student1._id, { parent: parent._id });
 
         // 6. Create Courses
         const course1 = await Course.create({

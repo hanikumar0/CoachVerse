@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../models/User.js';
+import Batch from '../models/Batch.js';
 import mongoose from 'mongoose';
 
 export const createUser = async (req: any, res: Response) => {
@@ -23,7 +24,6 @@ export const createUser = async (req: any, res: Response) => {
 
         // If batchId is provided (for students), add user to batch
         if (batchId && role === 'student') {
-            const Batch = mongoose.model('Batch');
             await Batch.findByIdAndUpdate(batchId, {
                 $addToSet: { students: user._id }
             });
