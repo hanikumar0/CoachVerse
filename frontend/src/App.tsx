@@ -7,7 +7,7 @@ import RoleRegisterPage from './pages/RoleRegisterPage';
 import Dashboard from './pages/Dashboard';
 import Courses from './pages/Courses';
 import Batches from './pages/Batches';
-import TimeTable from './pages/TimeTable';
+import Timetable from './pages/Timetable';
 import TestResults from './pages/TestResults';
 import Settings from './pages/Settings';
 import Messages from './pages/Messages';
@@ -62,7 +62,7 @@ function App() {
           path="/timetable"
           element={
             <ProtectedRoute>
-              <TimeTable />
+              <Timetable />
             </ProtectedRoute>
           }
         />

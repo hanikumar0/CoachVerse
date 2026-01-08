@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Plus, Clock, MapPin, Video, Users, BookOpen, Trash2, X, Loader2 } from 'lucide-react';
+import { Calendar, Plus, Clock, MapPin, Video, Users, Trash2, X, Loader2 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import api from '../api/axios';
 
-const TimeTable = () => {
+const Timetable = () => {
     const { user } = useAuthStore();
     const isAdmin = ['admin', 'super_admin'].includes(user?.role || '');
     const [schedules, setSchedules] = useState<any[]>([]);
@@ -302,4 +302,4 @@ const TimeTable = () => {
     );
 };
 
-export default TimeTable;
+export default Timetable;

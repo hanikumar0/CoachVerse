@@ -73,7 +73,7 @@ const roleConfigs: Record<string, any> = {
 const RoleLoginPage = () => {
     const { roleType } = useParams<{ roleType: string }>();
     const config = roleConfigs[roleType || 'student'] || roleConfigs.student;
-    const { theme, setTheme, isDark } = useTheme();
+    const { setTheme, isDark } = useTheme();
     const { t, i18n } = useTranslation();
 
     const [email, setEmail] = useState('');

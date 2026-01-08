@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Plus, Clock, Loader2, X, BookOpen, Users, Calendar, CheckCircle2, AlertCircle, Play, FileText, ChevronRight, ChevronLeft } from 'lucide-react';
+import { GraduationCap, Plus, Clock, Loader2, X, Play, FileText, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import api from '../api/axios';
 
@@ -322,8 +322,8 @@ const Exams = () => {
                                                 setUserAnswers(newAns);
                                             }}
                                             className={`p-6 rounded-3xl border-2 text-left transition-all group ${userAnswers[currentQuestionIndex] === idx
-                                                    ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
-                                                    : 'border-slate-50 bg-slate-50/50 hover:border-slate-200'
+                                                ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
+                                                : 'border-slate-50 bg-slate-50/50 hover:border-slate-200'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-4">

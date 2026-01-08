@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FolderOpen, Plus, Search, Filter, Loader2, FileText, Video, Link as LinkIcon, Archive, Download, ExternalLink, X, BookOpen, Trash2 } from 'lucide-react';
+import { FolderOpen, Plus, Search, Filter, Loader2, FileText, Video, Link as LinkIcon, Archive, Download, ExternalLink, X, Trash2 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import api from '../api/axios';
 
@@ -131,8 +131,8 @@ const Materials = () => {
                         >
                             <div className="flex items-start justify-between mb-6">
                                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110 ${item.fileType === 'Video' ? 'bg-rose-50 text-rose-600' :
-                                        item.fileType === 'PDF' ? 'bg-indigo-50 text-indigo-600' :
-                                            item.fileType === 'Zip' ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-600'
+                                    item.fileType === 'PDF' ? 'bg-indigo-50 text-indigo-600' :
+                                        item.fileType === 'Zip' ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-600'
                                     }`}>
                                     {getIcon(item.fileType)}
                                 </div>

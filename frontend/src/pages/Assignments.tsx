@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ClipboardList, Plus, Clock, Loader2, X, BookOpen, Users, Calendar, Link as LinkIcon, Send, Eye, CheckCircle2 } from 'lucide-react';
+import { ClipboardList, Plus, Clock, Loader2, X, Link as LinkIcon, Send, Eye, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import api from '../api/axios';
 

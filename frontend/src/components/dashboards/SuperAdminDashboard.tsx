@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Building2, Users, HardDrive, ArrowRight, Activity } from 'lucide-react';
+import { Building2, Users, HardDrive, Activity } from 'lucide-react';
 
 const SuperAdminDashboard = ({ stats }: { stats: any }) => {
     return (
