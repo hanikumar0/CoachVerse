@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Plus, Clock, Loader2, X, Play, FileText, ChevronRight, ChevronLeft } from 'lucide-react';
+import { GraduationCap, Plus, Clock, Loader2, X, Play, FileText, ChevronRight, ChevronLeft, Calendar } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import api from '../api/axios';
 
