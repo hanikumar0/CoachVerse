@@ -4,9 +4,9 @@ import { BarChart3, TrendingUp, Users, BookOpen, Download } from 'lucide-react';
 
 const Reports = () => {
     const stats = [
-        { label: 'Total Revenue', value: '$45,200', growth: '+12.5%', icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-        { label: 'Active Students', value: '1,280', growth: '+5.2%', icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50' },
-        { label: 'Courses Sold', value: '342', growth: '+8.1%', icon: BookOpen, color: 'text-amber-500', bg: 'bg-amber-50' },
+        { label: 'Total Revenue', value: '$0', growth: '0%', icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+        { label: 'Active Students', value: '0', growth: '0%', icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50' },
+        { label: 'Courses Sold', value: '0', growth: '0%', icon: BookOpen, color: 'text-amber-500', bg: 'bg-amber-50' },
     ];
 
     return (
@@ -56,24 +56,10 @@ const Reports = () => {
                 <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
                     <h4 className="text-lg font-bold text-slate-900 uppercase mb-8 border-none leading-none">Top Performing Courses</h4>
                     <div className="space-y-6">
-                        {[
-                            { name: 'Full Stack Development', students: 450, revenue: '$12,000' },
-                            { name: 'Advanced React Native', students: 320, revenue: '$9,600' },
-                            { name: 'Python for Data Science', students: 280, revenue: '$8,400' },
-                        ].map((course, i) => (
-                            <div key={i} className="flex items-center justify-between group cursor-pointer">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 font-bold group-hover:bg-indigo-600 group-hover:text-white transition-all uppercase">
-                                        {course.name[0]}
-                                    </div>
-                                    <div>
-                                        <p className="font-bold text-slate-900 text-sm uppercase group-hover:text-indigo-600 transition-colors tracking-tight">{course.name}</p>
-                                        <p className="text-xs text-slate-400 font-medium">{course.students} Enrolled</p>
-                                    </div>
-                                </div>
-                                <p className="font-black text-slate-900 group-hover:text-indigo-600 transition-colors uppercase text-sm tracking-tighter">{course.revenue}</p>
-                            </div>
-                        ))}
+                        <div className="py-20 text-center bg-slate-50/50 rounded-3xl border border-dashed border-slate-200">
+                            <BarChart3 className="w-10 h-10 text-slate-300 mx-auto mb-4" />
+                            <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No sales data available yet</p>
+                        </div>
                     </div>
                 </div>
             </div>

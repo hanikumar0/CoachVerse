@@ -1,13 +1,63 @@
 import { Response } from 'express';
 import Schedule from '../models/Schedule.js';
 
+// Helper to check time intersection
+const isTimeOverlap = (start1: string, end1: string, start2: string, end2: string) => {
+    return (start1 < end2 && end1 > start2);
+};
+
 export const createSchedule = async (req: any, res: Response) => {
     try {
+        const { dayOfWeek, startTime, endTime, teacherId, roomId, instituteId } = req.body;
+        const targetInstituteId = req.user.instituteId; // Enforce security
+
+        // 1. Check Teacher Conflict
+        const teacherConflict = await Schedule.findOne({
+            instituteId: targetInstituteId,
+            teacherId,
+            dayOfWeek,
+            $or: [
+                { startTime: { $lt: endTime, $gte: startTime } },
+                { endTime: { $gt: startTime, $lte: endTime } },
+                { startTime: { $lte: startTime }, endTime: { $gte: endTime } }
+            ]
+        });
+
+        if (teacherConflict) {
+            return res.status(409).json({
+                message: `Teacher collision! Pass overlap: ${teacherConflict.startTime}-${teacherConflict.endTime}`
+            });
+        }
+
+        // 2. Check Room Conflict (if room is assigned)
+        if (roomId) {
+            const roomConflict = await Schedule.findOne({
+                instituteId: targetInstituteId,
+                roomId,
+                dayOfWeek,
+                $or: [
+                    { startTime: { $lt: endTime, $gte: startTime } },
+                    { endTime: { $gt: startTime, $lte: endTime } },
+                    { startTime: { $lte: startTime }, endTime: { $gte: endTime } }
+                ]
+            });
+
+            if (roomConflict) {
+                return res.status(409).json({
+                    message: `Room collision! Already booked: ${roomConflict.startTime}-${roomConflict.endTime}`
+                });
+            }
+        }
+
         const schedule = await Schedule.create({
             ...req.body,
-            instituteId: req.user.instituteId
+            instituteId: targetInstituteId
         });
-        res.status(201).json(schedule);
+
+        // Populate specific fields immediately for frontend if needed, or return raw
+        const populated = await schedule.populate(['roomId', 'teacherId', 'courseId', 'batchId']);
+
+        res.status(201).json(populated);
     } catch (error) {
         res.status(500).json({ message: (error as Error).message });
     }
@@ -25,6 +75,7 @@ export const getSchedules = async (req: any, res: Response) => {
             .populate('batchId', 'name')
             .populate('courseId', 'title')
             .populate('teacherId', 'name')
+            .populate('roomId', 'name') // Populate Room info
             .sort({ dayOfWeek: 1, startTime: 1 });
 
         res.json(schedules);
@@ -35,12 +86,8 @@ export const getSchedules = async (req: any, res: Response) => {
 
 export const getTimetable = async (req: any, res: Response) => {
     try {
-        // Find schedules for the user's institute
-        // If the user is a student, we should probably filter by their batch
-        // For now, let's get all schedules for the institute
         const query: any = { instituteId: req.user.instituteId };
 
-        // If student, filter by batch
         if (req.user.role === 'student' && req.user.batchId) {
             query.batchId = req.user.batchId;
         } else if (req.user.role === 'teacher') {
@@ -50,7 +97,8 @@ export const getTimetable = async (req: any, res: Response) => {
         const schedules = await Schedule.find(query)
             .populate('courseId', 'title')
             .populate('teacherId', 'name')
-            .populate('batchId', 'name');
+            .populate('batchId', 'name')
+            .populate('roomId', 'name');
 
         const dayMap: { [key: string]: number } = {
             'Monday': 1,
@@ -72,7 +120,7 @@ export const getTimetable = async (req: any, res: Response) => {
                 _id: s._id,
                 subject: (s.courseId as any)?.title || 'Unknown Subject',
                 teacher: (s.teacherId as any)?.name || 'Unknown Teacher',
-                room: s.roomNumber || 'N/A',
+                room: (s.roomId as any)?.name || s.roomNumber || 'N/A', // Try roomId name first, then formatted fallback
                 startTime: s.startTime,
                 endTime: s.endTime,
                 day: s.dayOfWeek

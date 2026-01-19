@@ -1,29 +1,36 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import path from 'path';
 import User from './src/models/User.js';
 
-dotenv.config();
+console.log('--- SCRIPT START ---');
+dotenv.config({ path: path.join(process.cwd(), '.env') });
 
-const check = async () => {
+const checkUser = async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/coachverse');
-        const user = await User.findOne({ email: 'admin@coachverse.com' }).select('+password');
-        if (user) {
-            console.log('User found:', user.email);
-            console.log('Hashed Password:', user.password);
+        console.log('Connecting to DB...');
+        await mongoose.connect(process.env.MONGODB_URI!);
+        console.log('Connected!');
+        const email = 'aryanpandey35247@gmail.com';
+        const userByEmail = await User.findOne({ email });
+        console.log('User by email result:', userByEmail ? 'USER FOUND' : 'USER NOT FOUND');
 
-            // Try to manually compare with 'password123'
-            const bcrypt = (await import('bcryptjs')).default;
-            const isMatch = await bcrypt.compare('password123', user.password!);
-            console.log('Manual match with password123:', isMatch);
-        } else {
-            console.log('User not found');
+        if (userByEmail) {
+            console.log('User ID:', userByEmail._id);
+            console.log('User Email:', userByEmail.email);
+            console.log('User Username:', userByEmail.username);
         }
+
+        const usernameCheck = await User.findOne({ username: "" });
+        console.log('User with empty username result:', usernameCheck ? 'FOUND' : 'NOT FOUND');
+
+        await mongoose.disconnect();
+        console.log('--- SCRIPT END ---');
         process.exit(0);
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error('ERROR:', err);
         process.exit(1);
     }
 };
 
-check();
+checkUser();

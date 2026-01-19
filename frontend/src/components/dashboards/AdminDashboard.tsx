@@ -80,26 +80,10 @@ const AdminDashboard = ({ stats }: { stats: any }) => {
                             </button>
                         </div>
                         <div className="space-y-4">
-                            {[
-                                { title: 'Advanced React Architecture', time: '10:30 AM', teacher: 'Dr. Sarah Wilson' },
-                                { title: 'Node.js Performance Tuning', time: '01:00 PM', teacher: 'Prof. James Bond' },
-                            ].map((c, i) => (
-                                <div key={i} className="flex items-center justify-between p-4 rounded-3xl bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer group">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm font-bold text-indigo-600">
-                                            <Clock className="w-5 h-5" />
-                                        </div>
-                                        <div>
-                                            <p className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors uppercase truncate">{c.title}</p>
-                                            <p className="text-xs text-slate-500 font-medium">with {c.teacher}</p>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-sm font-bold text-slate-900">{c.time}</p>
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-indigo-500 px-2 py-0.5 rounded-full">Coming Up</span>
-                                    </div>
-                                </div>
-                            ))}
+                            <div className="py-20 text-center bg-slate-50/50 rounded-3xl border border-dashed border-slate-200">
+                                <Clock className="w-10 h-10 text-slate-300 mx-auto mb-4" />
+                                <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No live sessions scheduled for today</p>
+                            </div>
                         </div>
                     </div>
                 </div>

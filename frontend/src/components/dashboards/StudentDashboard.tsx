@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Clock, Award, Star, PlayCircle, Loader2 } from 'lucide-react';
+import { BookOpen, Clock, Award, PlayCircle, Loader2 } from 'lucide-react';
 import api from '../../api/axios';
 
 const StudentDashboard = () => {
@@ -82,14 +82,9 @@ const StudentDashboard = () => {
                 </div>
 
                 <div className="space-y-6">
-                    <div className="bg-gradient-to-br from-indigo-600 to-violet-700 p-8 rounded-[2rem] text-white shadow-xl relative overflow-hidden">
-                        <Star className="text-yellow-400 w-10 h-10 mb-4 fill-yellow-400 relative z-10" />
-                        <h3 className="text-xl font-bold mb-2 relative z-10">Exam Tomorrow!</h3>
-                        <p className="text-indigo-100 text-sm mb-6 leading-relaxed relative z-10">System Design & Scalability Quiz starting at 10:00 AM.</p>
-                        <button className="w-full bg-white text-indigo-600 py-3 rounded-xl font-bold hover:bg-indigo-50 transition-colors relative z-10">
-                            View Syllabus
-                        </button>
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                    <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+                        <h3 className="text-xl font-bold text-slate-900 mb-2">No Upcoming Exams</h3>
+                        <p className="text-slate-500 text-sm font-medium">You don't have any exams scheduled for the next 24 hours.</p>
                     </div>
                 </div>
             </div>

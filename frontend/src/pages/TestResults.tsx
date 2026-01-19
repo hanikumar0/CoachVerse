@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 import { Award, FileText, ChevronRight, TrendingUp } from 'lucide-react';
 
 const TestResults = () => {
-    const results = [
-        { id: 1, subject: 'React Architecture', score: 85, total: 100, date: '2023-10-15', status: 'Passed' },
-        { id: 2, subject: 'Node.js Backend', score: 92, total: 100, date: '2023-10-20', status: 'Passed' },
-        { id: 3, subject: 'System Design', score: 78, total: 100, date: '2023-10-25', status: 'Passed' },
-    ];
+    const results: any[] = [];
+    const stats = {
+        average: 0,
+        taken: 0,
+        upcoming: 0
+    };
 
     return (
         <DashboardLayout>
@@ -22,21 +23,21 @@ const TestResults = () => {
                         <Award className="text-indigo-600 w-6 h-6" />
                     </div>
                     <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Average Score</p>
-                    <h3 className="text-3xl font-black text-slate-900">85%</h3>
+                    <h3 className="text-3xl font-black text-slate-900">{stats.average}%</h3>
                 </div>
                 <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
                     <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center mb-4">
                         <TrendingUp className="text-emerald-600 w-6 h-6" />
                     </div>
                     <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Tests Taken</p>
-                    <h3 className="text-3xl font-black text-slate-900">12</h3>
+                    <h3 className="text-3xl font-black text-slate-900">{stats.taken}</h3>
                 </div>
                 <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
                     <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center mb-4">
                         <FileText className="text-amber-600 w-6 h-6" />
                     </div>
                     <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Upcoming</p>
-                    <h3 className="text-3xl font-black text-slate-900">2</h3>
+                    <h3 className="text-3xl font-black text-slate-900">{stats.upcoming}</h3>
                 </div>
             </div>
 
@@ -45,7 +46,12 @@ const TestResults = () => {
                     <h3 className="text-xl font-bold text-slate-900">Recent Assignments & Tests</h3>
                 </div>
                 <div className="divide-y divide-slate-50">
-                    {results.map((res) => (
+                    {results.length === 0 ? (
+                        <div className="py-20 text-center">
+                            <FileText className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                            <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">No test results found</p>
+                        </div>
+                    ) : results.map((res) => (
                         <motion.div
                             key={res.id}
                             whileHover={{ backgroundColor: 'rgba(248, 250, 252, 0.5)' }}

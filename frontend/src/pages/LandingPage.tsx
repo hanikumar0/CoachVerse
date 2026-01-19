@@ -1,12 +1,9 @@
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     BookOpen,
     Star,
     ArrowRight,
-    Smartphone,
-    Layout,
     BarChart,
-    Shield,
     Globe,
     PlayCircle,
     Check,
@@ -15,23 +12,20 @@ import {
     ArrowUpRight,
     Menu,
     X,
-    Twitter,
-    Github,
-    Linkedin,
-    Youtube
+    DollarSign,
+    Users,
+    Calendar,
+    MousePointer2
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
+// Use the uploaded dashboard hero image
+import dashboardHero from '../assets/dashboard_hero.png';
 
 const LandingPage = () => {
-    const sectionRef = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-
-    const { scrollYProgress } = useScroll({
-        target: sectionRef,
-        offset: ["start end", "end start"]
-    });
 
     useEffect(() => {
         const handleScroll = () => {
@@ -43,13 +37,13 @@ const LandingPage = () => {
 
     const navLinks = [
         { name: 'Features', href: '#features' },
-        { name: 'Integrations', href: '#integrations' },
-        { name: 'Pricing', href: '#pricing' },
-        { name: 'Resources', href: '#resources' }
+        { name: 'CRM & Leads', href: '#crm' },
+        { name: 'Finance', href: '#finance' },
+        { name: 'Pricing', href: '#pricing' }
     ];
 
     return (
-        <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-700 overflow-x-hidden">
+        <div className="relative min-h-screen bg-white text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-700 overflow-x-hidden">
             {/* Global Gradient Background */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
                 <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-50/50 rounded-full blur-[120px] animate-pulse"></div>
@@ -163,35 +157,34 @@ const LandingPage = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                         className="mb-10"
                     >
-                        <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-slate-100 text-slate-800 text-[10px] font-black tracking-[0.2em] uppercase mb-8 border border-white shadow-sm">
-                            <Layers className="w-3 h-3" />
-                            PLATFORM VERSION 2.0 IS LIVE
+                        <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-slate-100 text-slate-800 text-[10px] font-black tracking-[0.2em] uppercase mb-8 border border-white shadow-sm shimmer">
+                            <Layers className="w-3 h-3 text-indigo-500" />
+                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">The #1 Platform for Modern Institutes</span>
                         </span>
 
-                        <h1 className="text-5xl md:text-[8rem] font-black text-slate-900 tracking-tight leading-[1] md:leading-[0.85] mb-10">
-                            Empower your <br />
+                        <h1 className="text-5xl md:text-[7rem] lg:text-[8rem] font-black text-slate-900 tracking-tight leading-[1] md:leading-[0.9] mb-10">
+                            The Operating System for <br />
                             <span className="relative inline-block text-indigo-600">
-                                Academy
+                                Education
                                 <svg className="absolute -bottom-2 md:-bottom-4 left-0 w-full h-3 md:h-5 text-indigo-100 -z-10" viewBox="0 0 200 20" fill="none" preserveAspectRatio="none">
                                     <path d="M0 15C50 5 150 5 200 15" stroke="currentColor" strokeWidth="10" strokeLinecap="round" />
                                 </svg>
                             </span>
                         </h1>
 
-                        <p className="text-lg md:text-2xl text-slate-500 max-w-2xl mx-auto mb-16 leading-relaxed font-medium px-4">
-                            Scale your coaching business with intelligence. Manage students,
-                            courses, and growth in one stunning, AI-powered hub.
+                        <p className="text-lg md:text-2xl text-slate-500 max-w-3xl mx-auto mb-16 leading-relaxed font-medium px-4">
+                            Seamlessly manage <span className="text-slate-900 font-bold">Leads</span>, simplify <span className="text-slate-900 font-bold">Fees</span>, and master <span className="text-slate-900 font-bold">Scheduling</span>. Everything you need to scale your coaching business, in one beautiful place.
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 px-4">
                             <Link to="/register" className="w-full sm:w-auto bg-indigo-600 text-white px-12 py-5 rounded-[2.5rem] font-black text-lg flex items-center justify-center gap-3 hover:bg-indigo-700 transition-all shadow-[0_20px_40px_-15px_rgba(79,70,229,0.3)] active:scale-95 group">
-                                Create Workspace
+                                Start Your Academy
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
-                            <button className="w-full sm:w-auto bg-white text-slate-900 border-2 border-slate-100 px-12 py-5 rounded-[2.5rem] font-black text-lg hover:border-indigo-100 hover:bg-slate-50 transition-all flex items-center justify-center gap-3 shadow-sm">
+                            <a href="https://youtu.be/JF6ANMFEGFM" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto bg-white text-slate-900 border-2 border-slate-100 px-12 py-5 rounded-[2.5rem] font-black text-lg hover:border-indigo-100 hover:bg-slate-50 transition-all flex items-center justify-center gap-3 shadow-sm">
                                 <PlayCircle className="w-5 h-5 text-indigo-600" />
-                                Product Tour
-                            </button>
+                                Watch Demo
+                            </a>
                         </div>
                     </motion.div>
 
@@ -204,67 +197,66 @@ const LandingPage = () => {
                         {/* Dashboard Image */}
                         <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] border-4 md:border-8 border-white bg-slate-900">
                             <img
-                                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200"
+                                src={dashboardHero}
                                 alt="CoachVerse Dashboard"
                                 className="w-full h-auto object-cover opacity-90 transition-opacity duration-1000 group-hover:opacity-100"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
-                        </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent"></div>
 
-                        {/* Floating elements for depth */}
-                        <motion.div
-                            animate={{ y: [0, -20, 0] }}
-                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute -top-12 -right-8 p-8 bg-white/80 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-white/50 hidden lg:block"
-                        >
-                            <div className="flex flex-col items-center gap-4">
-                                <div className="p-4 bg-emerald-50 rounded-2xl">
-                                    <BarChart className="text-emerald-500 w-8 h-8" />
+                            {/* Overlay UI Mockups (Floating) */}
+                            <div className="absolute bottom-10 left-10 md:bottom-20 md:left-20 bg-white p-6 rounded-3xl shadow-2xl animate-bounce-slow hidden md:block max-w-xs text-left border border-slate-100">
+                                <div className="flex items-center gap-3 mb-3">
+                                    <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <Users className="w-5 h-5 text-indigo-600" />
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-slate-900 text-sm">New Admission</p>
+                                        <p className="text-xs text-slate-500">Just now</p>
+                                    </div>
                                 </div>
-                                <div className="text-center">
-                                    <p className="text-2xl font-black text-slate-900">+82%</p>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Revenue Growth</p>
+                                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div className="h-full bg-indigo-500 w-[70%]"></div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     </motion.div>
                 </div>
             </section>
 
             {/* Social Proof */}
-            <div className="py-24 bg-white/50 backdrop-blur-sm relative overflow-hidden">
+            <div className="py-24 bg-white/50 backdrop-blur-sm relative overflow-hidden border-y border-slate-100">
                 <div className="max-w-7xl mx-auto px-6 text-center">
-                    <p className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] mb-12">Industry leading institutes trust CoachVerse</p>
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] mb-12">Powering over 2,000 institutes globally</p>
                     <div className="flex flex-wrap justify-center lg:justify-between items-center gap-x-16 gap-y-12 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
-                        {['TECHNIQUE', 'LEARN.AI', 'MODERN.ED', 'SYNERGY', 'VELOCITY'].map(brand => (
-                            <span key={brand} className="text-3xl font-black tracking-tighter text-slate-900">{brand}</span>
+                        {['HARVARD.PREP', 'STANFORD.IO', 'TITAN.ACADEMY', 'FUTURE.SCHOOL', 'ELITE.COACH'].map(brand => (
+                            <span key={brand} className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900">{brand}</span>
                         ))}
                     </div>
                 </div>
             </div>
 
-            {/* Features Section */}
-            <section id="features" className="py-40 relative px-6" ref={sectionRef}>
+            {/* Features Grid */}
+            <section id="features" className="py-40 relative px-6 bg-slate-50/50">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-32">
                         <div className="max-w-3xl">
-                            <span className="text-indigo-600 font-extrabold uppercase tracking-[0.3em] text-xs mb-8 block">PLATFORM ECOSYSTEM</span>
-                            <h2 className="text-5xl md:text-8xl font-black text-slate-900 tracking-tight leading-[1] md:leading-[0.85] mb-12">
-                                Engineered for <br />
-                                <span className="text-slate-300">Infinite Scaling.</span>
+                            <span className="text-indigo-600 font-extrabold uppercase tracking-[0.3em] text-xs mb-8 block">EVERYTHING YOU NEED</span>
+                            <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight leading-[1] md:leading-[0.9] mb-12">
+                                Run your institute <br />
+                                <span className="text-slate-300">on Autopilot.</span>
                             </h2>
-                            <p className="text-xl text-slate-500 font-medium leading-relaxed">A unified operating system for your entire educational enterprise.</p>
+                            <p className="text-xl text-slate-500 font-medium leading-relaxed max-w-2xl">Replace 10+ disconnected tools with one powerful operating system designed for growth.</p>
                         </div>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {[
-                            { title: 'Unified Dashboards', desc: 'Custom portals tailored for students, parents, teachers, and admins.', icon: Layout, theme: 'indigo' },
-                            { title: 'Predictive Analytics', desc: 'Identify struggling students before they fail with AI signals.', icon: BarChart, theme: 'rose' },
-                            { title: 'Smart Scheduling', desc: 'Automated batch management and conflict-free timetables.', icon: Smartphone, theme: 'emerald' },
-                            { title: 'Data Security', desc: 'Military-grade encryption for student records and transactions.', icon: Shield, theme: 'amber' },
-                            { title: 'Global Reach', desc: 'Ultra-low latency content delivery for students worldwide.', icon: Globe, theme: 'blue' },
-                            { title: 'Brand Identity', desc: 'Fully white-labeled portal that reflects your unique brand.', icon: Smartphone, theme: 'violet' },
+                            { title: 'Smart CRM', desc: 'Capture leads from your website, track follow-ups, and convert more students.', icon: MousePointer2, theme: 'indigo' },
+                            { title: 'Fee Management', desc: 'Automated invoices, payment tracking, and financial reports at your fingertips.', icon: DollarSign, theme: 'emerald' },
+                            { title: 'Interactive Timetable', desc: 'Conflict-free scheduling for classes, teachers, and rooms.', icon: Calendar, theme: 'rose' },
+                            { title: 'Student Portal', desc: 'Give students a premium experience with their own login and dashboard.', icon: Users, theme: 'blue' },
+                            { title: 'Live Classes', desc: 'Seamless integration for hybrid learning and online sessions.', icon: Globe, theme: 'violet' },
+                            { title: 'Performance Analytics', desc: 'Real-time insights into student progress and institute revenue.', icon: BarChart, theme: 'amber' },
                         ].map((f, i) => (
                             <motion.div
                                 key={i}
@@ -272,15 +264,15 @@ const LandingPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="group p-10 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] bg-white border border-slate-100 hover:border-indigo-100 hover:shadow-[0_40px_80px_-20px_rgba(79,70,229,0.1)] transition-all duration-500 relative overflow-hidden"
+                                className="group p-10 rounded-[2.5rem] bg-white border border-slate-200 hover:border-indigo-200 hover:shadow-[0_20px_60px_-10px_rgba(79,70,229,0.15)] transition-all duration-500 relative overflow-hidden"
                             >
-                                <div className={`w-14 h-14 rounded-3xl mb-10 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-slate-50`}>
-                                    <f.icon className="w-7 h-7 text-slate-800" />
+                                <div className={`w-14 h-14 rounded-2xl mb-8 flex items-center justify-center bg-${f.theme}-50 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}>
+                                    <f.icon className={`w-7 h-7 text-${f.theme}-600`} />
                                 </div>
-                                <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight uppercase">{f.title}</h3>
-                                <p className="text-slate-500 font-medium leading-relaxed">{f.desc}</p>
-                                <div className="mt-8 flex items-center gap-2 text-indigo-600 text-xs font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0 transition-all">
-                                    Learn More <ArrowRight className="w-4 h-4" />
+                                <h3 className="text-xl font-black text-slate-900 mb-4 tracking-tight uppercase">{f.title}</h3>
+                                <p className="text-slate-500 font-medium leading-relaxed text-sm mb-8">{f.desc}</p>
+                                <div className="flex items-center gap-2 text-indigo-600 text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0 transition-all">
+                                    Explore <ArrowRight className="w-3 h-3" />
                                 </div>
                             </motion.div>
                         ))}
@@ -288,67 +280,108 @@ const LandingPage = () => {
                 </div>
             </section>
 
+            {/* Dynamic Section: The Financial Hub */}
+            <section id="finance" className="py-40 px-6 bg-slate-900 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+                <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center relative z-10">
+                    <div>
+                        <span className="text-emerald-400 font-black uppercase tracking-[0.3em] text-xs mb-8 block">FINANCIAL CLARITY</span>
+                        <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-10">
+                            Never miss a <br />
+                            <span className="text-indigo-400">payment.</span>
+                        </h2>
+                        <p className="text-xl text-slate-400 font-medium leading-relaxed mb-12">
+                            Stop chasing parents for fees. CoachVerse automates invoicing, reminders, and receipts so you can focus on teaching.
+                        </p>
+
+                        <ul className="space-y-6 mb-12">
+                            {['Automated Invoice Generation', 'One-click Payment Reminders', 'Revenue & Due Reports', 'Parent Payment Portal'].map((item, i) => (
+                                <li key={i} className="flex items-center gap-4">
+                                    <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                        <Check className="w-3 h-3 font-black" />
+                                    </div>
+                                    <span className="font-bold text-lg">{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+
+                        <Link to="/register" className="inline-flex items-center gap-3 bg-emerald-500 text-slate-900 px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:bg-emerald-400 transition-colors">
+                            Start Collecting Fees
+                            <ArrowRight className="w-4 h-4" />
+                        </Link>
+                    </div>
+
+                    <div className="relative">
+                        <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 p-8 rounded-[2.5rem] relative">
+                            {/* Mockup of Fee Card */}
+                            <div className="space-y-6">
+                                <div className="flex items-center justify-between border-b border-slate-700 pb-6">
+                                    <div>
+                                        <p className="text-xs text-slate-400 uppercase tracking-widest font-bold">Total Revenue</p>
+                                        <p className="text-4xl font-black text-white mt-1">$124,500</p>
+                                    </div>
+                                    <div className="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-lg text-xs font-bold">+12% this month</div>
+                                </div>
+                                <div className="space-y-4">
+                                    {[
+                                        { name: 'Aarav Patel', amount: '$450', status: 'Paid', date: 'Today, 10:23 AM' },
+                                        { name: 'Sarah Jenkins', amount: '$300', status: 'Pending', date: 'Yesterday' },
+                                        { name: 'Mike Ross', amount: '$550', status: 'Paid', date: 'Oct 24, 2024' },
+                                    ].map((txn, i) => (
+                                        <div key={i} className="flex items-center justify-between p-4 bg-slate-800 rounded-2xl border border-slate-700 hover:border-indigo-500/50 transition-colors">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold">
+                                                    {txn.name[0]}
+                                                </div>
+                                                <div>
+                                                    <p className="font-bold text-sm">{txn.name}</p>
+                                                    <p className="text-[10px] text-slate-500 uppercase tracking-wide">{txn.date}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="font-bold text-white">{txn.amount}</p>
+                                                <p className={`text-[10px] font-bold uppercase ${txn.status === 'Paid' ? 'text-emerald-400' : 'text-amber-400'}`}>{txn.status}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Testimonials */}
-            <section className="py-40 bg-slate-50 relative overflow-hidden px-6">
+            <section className="py-40 bg-white relative overflow-hidden px-6">
                 <div className="max-w-7xl mx-auto text-center mb-24">
-                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter mb-8 px-4">Loved by modern creators.</h2>
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter mb-8 px-4">Trusted by modern educators.</h2>
                     <div className="flex justify-center gap-2">
                         {[1, 2, 3, 4, 5].map(i => (
-                            <Star key={i} className="w-6 h-6 fill-indigo-600 text-indigo-600" />
+                            <Star key={i} className="w-6 h-6 fill-amber-400 text-amber-400" />
                         ))}
                     </div>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     {[
-                        { name: 'Alex Harrington', role: 'Founder, TechAcademy', text: "The most robust LMS we've ever used. The student dashboard is worlds ahead in terms of UX." },
-                        { name: 'Dr. Sarah Chen', role: 'Dean, Creative Arts Inst.', text: "CoachVerse reduced our admin overhead by 60%. Automated tracking is a lifesaver." },
-                        { name: 'Marcus Russo', role: 'Head Coach, FitCode', text: "Stunning interface. My students enjoy logging in to track progress. Highly recommended." }
+                        { name: 'Dr. Anand Kumar', role: 'Super 30 Academy', text: "The Lead Management feature changed how we admit students. No more lost inquiries." },
+                        { name: 'Elena Rodriguez', role: 'Principal, Arts High', text: "Finally, a platform that handles Fees and Timetables together. It's beautiful and fast." },
+                        { name: 'James Wilson', role: 'Coding Bootcamp', text: "The best investment for our academy. The student portal is world-class." }
                     ].map((t, i) => (
-                        <div key={i} className="p-10 md:p-12 bg-white rounded-[3rem] border border-slate-200/50 shadow-sm relative group">
-                            <Quote className="absolute top-8 right-8 w-12 h-12 text-slate-50 group-hover:text-indigo-50 transition-colors" />
+                        <div key={i} className="p-10 md:p-12 bg-slate-50 rounded-[3rem] border border-slate-100 relative group hover:bg-white hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-500">
+                            <Quote className="absolute top-8 right-8 w-10 h-10 text-indigo-100 group-hover:text-indigo-500 transition-colors" />
                             <p className="text-lg font-medium text-slate-700 leading-relaxed mb-10 italic px-2">"{t.text}"</p>
-                            <div>
-                                <h4 className="font-black text-slate-900 uppercase text-sm tracking-widest">{t.name}</h4>
-                                <p className="text-xs font-bold text-slate-400 mt-1 uppercase tracking-widest">{t.role}</p>
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-600 text-xl">
+                                    {t.name[0]}
+                                </div>
+                                <div>
+                                    <h4 className="font-black text-slate-900 uppercase text-xs tracking-widest">{t.name}</h4>
+                                    <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">{t.role}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Pricing Section */}
-            <section id="pricing" className="py-40 px-6">
-                <div className="max-w-7xl mx-auto text-center mb-20 px-4">
-                    <span className="text-xs font-black text-indigo-600 tracking-[0.4em] uppercase block mb-4">Pricing Plans</span>
-                    <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-tight">Simple, transparent pricing.</h2>
-                </div>
-
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    {[
-                        { name: 'Starter', price: '$0', features: ['Up to 10 Students', 'Basic Analytics', 'Standard Support', '5GB Storage'] },
-                        { name: 'Professional', price: '$49', features: ['Up to 100 Students', 'AI Performance Alerts', 'Priority Support', '50GB Storage'], highlight: true },
-                        { name: 'Enterprise', price: '$199', features: ['Unlimited Students', 'Full White Labeling', 'Dedicated Account Manager', 'Unlimited Storage'] },
-                    ].map((plan, i) => (
-                        <div key={i} className={`p-10 md:p-12 rounded-[3.5rem] border ${plan.highlight ? 'bg-slate-950 text-white border-slate-900 shadow-3xl shadow-indigo-100 scale-100 lg:scale-105' : 'bg-white text-slate-900 border-slate-100'} transition-all hover:scale-[1.02] duration-500`}>
-                            <h3 className="text-xl font-black uppercase tracking-widest mb-4">{plan.name}</h3>
-                            <div className="flex items-baseline gap-2 mb-10">
-                                <span className="text-6xl font-black tracking-tighter">{plan.price}</span>
-                                <span className={`text-sm font-bold ${plan.highlight ? 'text-indigo-300' : 'text-slate-400'}`}>/Mo</span>
-                            </div>
-                            <ul className="space-y-6 mb-12 font-medium">
-                                {plan.features.map(f => (
-                                    <li key={f} className="flex items-center gap-3 text-sm">
-                                        <div className={`w-5 h-5 rounded-full ${plan.highlight ? 'bg-indigo-500 text-slate-950' : 'bg-indigo-50 text-indigo-600'} flex items-center justify-center`}>
-                                            <Check className="w-3 h-3 font-bold" />
-                                        </div>
-                                        {f}
-                                    </li>
-                                ))}
-                            </ul>
-                            <Link to="/register" className={`block text-center py-5 rounded-2xl font-black text-sm tracking-[0.2em] transition-all uppercase ${plan.highlight ? 'bg-indigo-600 hover:bg-indigo-700 shadow-xl' : 'bg-slate-950 text-white hover:bg-black'}`}>
-                                Get Started
-                            </Link>
                         </div>
                     ))}
                 </div>
@@ -356,21 +389,21 @@ const LandingPage = () => {
 
             {/* CTA Final */}
             <section className="pb-32 px-6">
-                <div className="max-w-7xl mx-auto rounded-[3rem] md:rounded-[4rem] bg-indigo-600 p-10 md:p-32 text-center text-white relative overflow-hidden shadow-3xl shadow-indigo-200">
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-700 to-indigo-900"></div>
-                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div className="max-w-7xl mx-auto rounded-[3rem] md:rounded-[4rem] bg-indigo-600 p-10 md:p-32 text-center text-white relative overflow-hidden shadow-3xl shadow-indigo-600/30">
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 
                     <div className="relative z-10 max-w-4xl mx-auto">
                         <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-none mb-12">
-                            Stop managing. <br />
-                            <span className="text-indigo-200">Start coaching.</span>
+                            Ready to <br />
+                            <span className="text-indigo-200">Scale Up?</span>
                         </h2>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                             <Link to="/register" className="w-full sm:w-auto bg-white text-indigo-700 px-12 py-5 rounded-3xl font-black text-lg hover:scale-105 transition-all shadow-xl shadow-indigo-900/20 active:scale-95">
-                                Try Free For 14 Days
+                                Get Started for Free
                             </Link>
                         </div>
-                        <p className="mt-10 text-indigo-100 font-bold opacity-60 text-xs tracking-[0.3em] uppercase">No credit card required. Cancel anytime.</p>
+                        <p className="mt-10 text-indigo-100 font-bold opacity-60 text-xs tracking-[0.3em] uppercase">Join 5,000+ top educators today.</p>
                     </div>
                 </div>
             </section>
@@ -378,91 +411,14 @@ const LandingPage = () => {
             {/* Footer */}
             <footer className="py-24 bg-white border-t border-slate-100">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-16 lg:gap-20 mb-20">
-                        <div className="md:col-span-2">
-                            <div className="flex items-center gap-3 mb-8">
-                                <div className="bg-indigo-600 p-2 rounded-xl">
-                                    <BookOpen className="text-white w-5 h-5" />
-                                </div>
-                                <span className="text-2xl font-black tracking-tighter">CoachVerse</span>
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-indigo-600 p-2 rounded-xl">
+                                <BookOpen className="text-white w-5 h-5" />
                             </div>
-                            <p className="text-slate-400 font-medium leading-relaxed max-w-xs uppercase text-[10px] tracking-widest mb-8">
-                                The world's most advanced hub for digital academics and elite private coaches.
-                            </p>
-                            <div className="flex items-center gap-4">
-                                <a href="https://twitter.com/coachverse" target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-sky-500 hover:bg-sky-50 transition-all">
-                                    <Twitter className="w-5 h-5" />
-                                </a>
-                                <a href="https://github.com/coachverse" target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all">
-                                    <Github className="w-5 h-5" />
-                                </a>
-                                <a href="https://linkedin.com/company/coachverse" target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all">
-                                    <Linkedin className="w-5 h-5" />
-                                </a>
-                                <a href="https://youtube.com/c/coachverse" target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all">
-                                    <Youtube className="w-5 h-5" />
-                                </a>
-                            </div>
+                            <span className="text-2xl font-black tracking-tighter text-slate-900">CoachVerse</span>
                         </div>
-
-                        {[
-                            {
-                                title: 'Product', links: [
-                                    { name: 'Features', path: '#features' },
-                                    { name: 'LMS', path: '/register' },
-                                    { name: 'Mobile App', path: '/' },
-                                    { name: 'Security', path: '/' }
-                                ]
-                            },
-                            {
-                                title: 'Company', links: [
-                                    { name: 'About', path: '/' },
-                                    { name: 'Careers', path: '/' },
-                                    { name: 'Contact', path: '/' },
-                                    { name: 'Blog', path: '/' }
-                                ]
-                            },
-                            {
-                                title: 'Support', links: [
-                                    { name: 'Documentation', path: '/' },
-                                    { name: 'API Reference', path: '/' },
-                                    { name: 'Help Center', path: '/' },
-                                    { name: 'Terms of Service', path: '/' }
-                                ]
-                            },
-                            {
-                                title: 'Legal', links: [
-                                    { name: 'Privacy Policy', path: '/' },
-                                    { name: 'Cookie Policy', path: '/' },
-                                    { name: 'GDPR Compliance', path: '/' },
-                                    { name: 'SLA', path: '/' }
-                                ]
-                            }
-                        ].map(col => (
-                            <div key={col.title}>
-                                <h4 className="font-black uppercase text-[10px] tracking-[0.3em] text-slate-900 mb-8">{col.title}</h4>
-                                <ul className="space-y-4">
-                                    {col.links.map(link => (
-                                        <li key={link.name}>
-                                            {link.path.startsWith('#') ? (
-                                                <a href={link.path} className="text-sm font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-tight">{link.name}</a>
-                                            ) : (
-                                                <Link to={link.path} className="text-sm font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-tight">{link.name}</Link>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="pt-10 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-8">
-                        <div className="flex items-center gap-8">
-                            <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none">© 2026 COACHVERSE LTD. ALL RIGHTS RESERVED.</p>
-                        </div>
-                        <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                            <span>BUILT WITH ❤️ FOR THE FUTURE OF EDUCATION</span>
-                        </div>
+                        <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none">© 2026 COACHVERSE LTD.</p>
                     </div>
                 </div>
             </footer>

@@ -1,8 +1,8 @@
-import Assignment from '../models/Assignment';
-import Attendance from '../models/Attendance';
-import Exam from '../models/Exam';
-import Material from '../models/Material';
-import Message from '../models/Message';
+import Assignment from '../models/Assignment.js';
+import Attendance from '../models/Attendance.js';
+import Exam from '../models/Exam.js';
+import Material from '../models/Material.js';
+import Message from '../models/Message.js';
 // Get dashboard statistics
 export const getDashboardStats = async (req, res) => {
     try {

@@ -8,7 +8,8 @@ export interface ISchedule extends Document {
     dayOfWeek: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
     startTime: string; // e.g. "09:00"
     endTime: string;   // e.g. "10:30"
-    roomNumber?: string;
+    roomId?: mongoose.Types.ObjectId;
+    roomNumber?: string; // Legacy/Fallback
     meetingLink?: string;
     isActive: boolean;
 }
@@ -26,6 +27,7 @@ const ScheduleSchema: Schema = new Schema(
         },
         startTime: { type: String, required: true },
         endTime: { type: String, required: true },
+        roomId: { type: Schema.Types.ObjectId, ref: 'Room' },
         roomNumber: { type: String },
         meetingLink: { type: String },
         isActive: { type: Boolean, default: true },

@@ -18,7 +18,9 @@ import {
     GraduationCap,
     FolderOpen,
     BarChart3,
-    Megaphone
+    Megaphone,
+    Wallet,
+    Phone
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
@@ -51,7 +53,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 setNotifications(data.notifications);
                 setUnreadCount(data.unreadCount);
             } catch (err) {
-                console.error("Failed to fetch notifications");
+                // Silently fail for connection refused/network errors to avoid console spam
+                // Only log if it's a different error
+                // console.warn("Notification system unavailable");
             }
         };
 
@@ -75,8 +79,10 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         { icon: MessageSquare, label: 'Messages', path: '/messages', roles: ['super_admin', 'admin', 'teacher', 'student', 'parent'] },
         { icon: FileText, label: 'Test Results', path: '/test-results', roles: ['super_admin', 'admin', 'teacher', 'student', 'parent'] },
         { icon: Megaphone, label: 'Announcements', path: '/announcements', roles: ['super_admin', 'admin', 'teacher', 'student', 'parent'] },
+        { icon: Phone, label: 'CRM / Leads', path: '/leads', roles: ['super_admin', 'admin'] },
         { icon: Users, label: 'Users', path: '/users', roles: ['super_admin', 'admin'] },
         { icon: BarChart3, label: 'Reports', path: '/reports', roles: ['super_admin', 'admin'] },
+        { icon: Wallet, label: 'Fees', path: '/fees', roles: ['super_admin', 'admin', 'student', 'parent'] },
         { icon: Settings, label: 'Settings', path: '/settings', roles: ['super_admin', 'admin', 'teacher', 'student', 'parent'] },
     ];
 
@@ -95,7 +101,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                     </span>
                 </div>
 
-                <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto custom-scrollbar">
+                <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto custom-scrollbar relative">
                     {navItems.map((item) => (
                         <Link
                             key={item.label}
@@ -147,7 +153,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                                     <X className="w-5 h-5 text-slate-400" />
                                 </button>
                             </div>
-                            <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                            <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto relative">
                                 {navItems.map((item) => (
                                     <Link
                                         key={item.label}

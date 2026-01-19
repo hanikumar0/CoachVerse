@@ -19,6 +19,9 @@ import materialRoutes from './routes/materialRoutes.js';
 import scheduleRoutes from './routes/scheduleRoutes.js';
 import parentRoutes from './routes/parentRoutes.js';
 import instituteRoutes from './routes/instituteRoutes.js';
+import feeRoutes from './routes/feeRoutes.js';
+import roomRoutes from './routes/roomRoutes.js';
+import leadRoutes from './routes/leadRoutes.js';
 
 dotenv.config();
 
@@ -29,6 +32,10 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
@@ -48,6 +55,9 @@ app.use('/api/exams', examRoutes);
 app.use('/api/materials', materialRoutes);
 app.use('/api/schedules', scheduleRoutes);
 app.use('/api/institutes', instituteRoutes);
+app.use('/api/fees', feeRoutes);
+app.use('/api/rooms', roomRoutes);
+app.use('/api/leads', leadRoutes);
 
 // Health Check
 app.get('/health', (req: Request, res: Response) => {

@@ -5,9 +5,12 @@ export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
-    role: 'super_admin' | 'admin' | 'teacher' | 'student' | 'parent';
+    role: 'super_admin' | 'admin' | 'teacher' | 'student' | 'parent' | 'mail_user';
     instituteId: mongoose.Types.ObjectId;
     phoneNumber?: string;
+    username?: string;
+    gmailId?: string;
+    mailId?: string;
     avatar?: string;
     isVerified: boolean;
     // For Parents
@@ -23,9 +26,12 @@ const UserSchema: Schema = new Schema(
         name: { type: String, required: true },
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true, select: false },
+        username: { type: String, unique: true, sparse: true },
+        gmailId: { type: String },
+        mailId: { type: String },
         role: {
             type: String,
-            enum: ['super_admin', 'admin', 'teacher', 'student', 'parent'],
+            enum: ['super_admin', 'admin', 'teacher', 'student', 'parent', 'mail_user'],
             default: 'student'
         },
         instituteId: { type: Schema.Types.ObjectId, ref: 'Institute' },

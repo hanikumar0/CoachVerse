@@ -18,6 +18,8 @@ import Announcements from './pages/Announcements';
 import Exams from './pages/Exams';
 import UsersPage from './pages/Users';
 import Reports from './pages/Reports';
+import Fees from './pages/Fees';
+import Leads from './pages/Leads';
 import { useAuthStore } from './store/authStore';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -143,6 +145,22 @@ function App() {
           element={
             <ProtectedRoute>
               <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/fees"
+          element={
+            <ProtectedRoute>
+              <Fees />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/leads"
+          element={
+            <ProtectedRoute>
+              <Leads />
             </ProtectedRoute>
           }
         />
