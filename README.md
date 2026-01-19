@@ -4,7 +4,8 @@ CoachVerse is a modern AI-powered coaching platform designed to connect users wi
 
 🌐 Live Platform
 
-🔗 Web App: https://coach-verse-eight.vercel.app/
+🔗 Web App: https://coach-verse-eta.vercel.app/
+    Video Demo: https://youtu.be/JF6ANMFEGFM
 
 🎯 Purpose
 
@@ -61,7 +62,7 @@ MongoDB / Firebase
 
 Firebase Authentication
 
-Cloud Hosting (Vercel / Render / Railway)
+Cloud Hosting (Vercel / Render)
 
 📂 Project Structure
 CoachVerse/
@@ -89,6 +90,13 @@ OPENAI_API_KEY=your_api_key
 MONGODB_URL=your_db_url
 JWT_SECRET=your_secret
 FIREBASE_API_KEY=your_firebase_key
+#Email Configuration
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=Your_gmail@gmail.com
+SMTP_PASS=Your_password
+FROM_EMAIL=Your_gmail@gmail.com
+FROM_NAME=Appication name
 🚧 Roadmap
 
 ✅ AI Chat Integration
@@ -129,3 +137,4 @@ Built with ❤️ using React Native & AI
 ⭐ Support
 
 If you like this project, please give it a ⭐ on GitHub and share feedback!
+
