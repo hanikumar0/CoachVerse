@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Plus, Clock, MapPin, Video, Users, Trash2, X, Loader2, Building, PenSquare } from 'lucide-react';
+import { Calendar, Plus, Clock, MapPin, Users, Trash2, X, Loader2, Building } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import api from '../api/axios';
 

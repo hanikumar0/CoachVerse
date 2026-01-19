@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { Search, MoreVertical, Mail, Phone, ShieldCheck, X, UserPlus, Loader2, Link as LinkIcon, Eye, EyeOff, RefreshCw, Trash2, Send } from 'lucide-react';
+import { Search, MoreVertical, Mail, Phone, ShieldCheck, X, UserPlus, Loader2, Link as LinkIcon, Eye, EyeOff, Trash2, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
 import { useAuthStore } from '../store/authStore';

@@ -3,16 +3,12 @@ import DashboardLayout from '../components/layout/DashboardLayout';
 import {
     Wallet,
     Plus,
-    Search,
-    Filter,
     CheckCircle2,
     Clock,
     AlertCircle,
     Banknote,
     ChevronRight,
-    Loader2,
-    Calendar,
-    Users
+    Loader2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
@@ -21,7 +17,7 @@ import { useAuthStore } from '../store/authStore';
 const Fees = () => {
     const { user } = useAuthStore();
     const isAdmin = ['admin', 'super_admin'].includes(user?.role || '');
-    const isStudentOrParent = ['student', 'parent'].includes(user?.role || '');
+    // const isStudentOrParent = ['student', 'parent'].includes(user?.role || ''); // Removed unused variable
 
     const [activeTab, setActiveTab] = useState(isAdmin ? 'all' : 'my');
     const [payments, setPayments] = useState<any[]>([]);
